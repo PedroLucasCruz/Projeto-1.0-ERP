@@ -6,6 +6,9 @@ Imports System.Net.Mail
 Public Class frmAnalisePedido
 
     Dim QUANTIDADE As String
+    Dim objPedidoAnalise As New Pedido
+    Dim strFuncoes As String
+
 
     Private Function EnviarEmail(ByVal txtProduto As String, ByVal txtQuantidade As String)
         Dim objEnvio As SmtpClient = Nothing
@@ -57,6 +60,11 @@ Public Class frmAnalisePedido
         Return blnRetorno
     End Function
 
+    Public Sub atualizarstatus()
+
+    End Sub
+
+
     Public Sub enviarEmailG(ByVal txtProduto As String, ByVal txtQuantidade As String)
         Try
             Dim smtpServidor As New SmtpClient
@@ -73,7 +81,9 @@ Public Class frmAnalisePedido
             email.Subject = "pedroteste43@gmail.com"
             email.Body = "Solicitação do produto: " & txtProduto & "Quantidade: " & txtQuantidade
             smtpServidor.Send(email)
-            MsgBox("Email Enviado")
+            MsgBox("Email Enviado, Status atualizado!")
+            objPedidoAnalise.atualizarStatus(txtCodigo.Text)
+
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
@@ -81,8 +91,7 @@ Public Class frmAnalisePedido
 
     End Sub
 
-    Dim objPedidoAnalise As New Pedido
-    Dim strFuncoes As String
+
 
     Public Sub desabilitarControles()
         txtEmitente.Enabled = False
@@ -107,6 +116,8 @@ Public Class frmAnalisePedido
 
         While dr.Read = True
             With objPedidoAnalise
+
+
 
                 lblStatus.Text = dr!STRSITUACAOPEDIDO
                 txtEmitente.Text = dr!NOMEPESSOAEMITENTE

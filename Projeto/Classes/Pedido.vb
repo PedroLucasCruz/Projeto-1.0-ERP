@@ -40,7 +40,40 @@ Public Class Pedido
         End If
     End Sub
 
+    Public Sub atualizarStatus(ByVal codigo As Integer)
+        Dim INTCODPEDIDO_NOVO As SqlParameter = Nothing
+        objConn = New SqlClient.SqlConnection("Data Source = DESKTOP-9N126U5\; INITIAL CATALOG = BaseDeDados; Trusted_Connection=True; MultipleActiveResultSets=True;")
+        objConn.Open()
 
+        Try
+            ConfigurarComandoSQL(True, "spPedido_m")
+            With SqlBd
+
+                '.Transaction = Tran
+                .Parameters.AddWithValue("@pTipo", 3)
+                .Parameters.AddWithValue("@INTCODPEDIDO_PK", codigo)
+
+                'INTCODPEDIDO_NOVO = .Parameters.Add("@INTCODPEDIDO_PK", SqlDbType.Int, 0, "intCodReg")
+                'INTCODPEDIDO_NOVO.Direction = ParameterDirection.Output
+
+                .ExecuteScalar()
+                'Tran.Commit()
+
+                'Return Integer.Parse(INTCODPEDIDO_NOVO.Value)
+            End With
+
+        Catch Ex As Exception
+            MsgBox(Ex.ToString)
+            'Throw New(EX)
+            'Tran.Rollback()
+
+        Finally
+            '  objSql.ConfigurarComandoSQL(False)
+            '  objConexãoLocal.
+            objConn.Close()
+        End Try
+        'Return Integer.Parse(INTCODPEDIDO_NOVO.Value)
+    End Sub
 
     Public Function Incluir() As Integer
         Dim INTCODPEDIDO_NOVO As SqlParameter = Nothing

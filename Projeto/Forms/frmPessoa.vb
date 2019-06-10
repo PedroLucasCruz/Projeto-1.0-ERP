@@ -10,7 +10,6 @@ Public Class frmPessoa
     End Sub
 
     Public Sub gravarDados()
-
         preencherCampos()
         objPessoa.Incluir()
 
